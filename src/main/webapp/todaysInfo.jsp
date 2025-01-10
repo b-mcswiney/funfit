@@ -3,13 +3,14 @@
 <%@page import="model.Participant"%>
 <%@page import="model.Batch"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Admin Dashboard</title>
+<title>Today's data</title>
 <style type="text/css">
 	th, td {
   		padding: 15px;
@@ -26,23 +27,28 @@
 </style>
 </head>
 <body>
-	<a href="index.html">Home page</a>
-	<div style="text-align: center;">
-	<h1>Participant's Table :</h1>
-	<a href="addParticipant.jsp">Add participant</a>
-	<table class='table'>
+<a href="index.html">Home page</a>
+<div style="text-align: center;">
+	<h1>TODAY'S INFO</h1>
+	<table>
 		<tr>
 			<th>Pid</th>
-			<th>Name</th>
+			<th>Participant Name</th>
 			<th>Phone</th>
 			<th>Email</th>
 			<th>Bid</th>
+			<th>Start time</th>
+			<th>End time</th>
+			<th>Trainer Name</th>
 		</tr>
 		<%
 				BatchDatabase batchDB = new BatchDatabase();
 				ArrayList<Participant> participants = new ParticipantDatabase().getParticipants();
 				for (Participant p : participants) {
 					Batch b = batchDB.getBatch(p.getBid());
+					Date today = new Date();
+					
+					if(today.after(b.getStarttime()) && today.before(b.getEndtime())){
 					
 		%>
 		<tr>
@@ -51,35 +57,15 @@
 			<td><%=p.getPhone()%></td>
 			<td><%=p.getEmail()%></td>
 			<td><%=p.getBid()%></td>
-			<td><a href='EditParticipant?pid=<%=p.getPid()%>'>Edit</a></td>
-			<td><a href='DeleteParticipant?pid=<%=p.getPid()%>'>Delete</a></td>
-		</tr>
-		<%} %>
-	</table>
-	<h1>Batch Table :</h1>
-	<a href="addBatch.jsp">Add Batch</a>
-	<table>
-		<tr>
-			<th>Bid</th>
-			<th>Start Date</th>
-			<th>End Date</th>
-			<th>Trainer name</th>
+			<td><%=b.getStarttime()%></td>
+			<td><%=b.getEndtime()%></td>
+			<td><%=b.getTrainerName()%></td>
 		</tr>
 		<%
-				ArrayList<Batch> batches = new BatchDatabase().getBatches();
-				for (Batch b : batches) {
-					
+					}
+				}
 		%>
-		<tr>
-			<td><%= b.getBid() %></td>
-			<td><%= b.getStarttime() %></td>
-			<td><%= b.getEndtime() %></td>
-			<td><%= b.getTrainerName() %></td>
-			<td><a href='EditBatch?bid=<%=b.getBid()%>'>Edit</a></td>
-			<td><a href='DeleteBatch?bid=<%=b.getBid()%>'>Delete</a></td>
-		</tr>
-		<%} %>
 	</table>
-	</div>
+</div>
 </body>
 </html>
