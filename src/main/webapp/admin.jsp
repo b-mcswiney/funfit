@@ -9,10 +9,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Admin Dashboard</title>
 </head>
 <body>
-	<h1>Participant's List :</h1>
+	<h1>Participant's Table :</h1>
+	<a href="addParticipant.jsp">Add participant</a>
 	<table class='table'>
 		<tr>
 			<th>Pid</th>
@@ -20,9 +21,6 @@
 			<th>Phone</th>
 			<th>Email</th>
 			<th>Bid</th>
-			<th>Start time</th>
-			<th>End time</th>
-			<th>Trainer Name</th>
 		</tr>
 		<%
 				BatchDatabase batchDB = new BatchDatabase();
@@ -37,9 +35,32 @@
 			<td><%=p.getPhone()%></td>
 			<td><%=p.getEmail()%></td>
 			<td><%=p.getBid()%></td>
-			<td><%=b.getStarttime()%></td>
-			<td><%=b.getEndtime()%></td>
-			<td><%=b.getTrainerName()%></td>
+			<td><a href='EditParticipant?pid=<%=p.getPid()%>'>Edit</a></td>
+			<td><a href='DeleteParticipant?pid=<%=p.getPid()%>'>Delete</a></td>
+		</tr>
+		<%} %>
+	</table>
+	<h1>Batch Table :</h1>
+	<a href="addBatch.jsp">Add Batch</a>
+	<table>
+		<tr>
+			<th>Bid</th>
+			<th>Start Date</th>
+			<th>End Date</th>
+			<th>Trainer name</th>
+		</tr>
+		<%
+				ArrayList<Batch> batches = new BatchDatabase().getBatches();
+				for (Batch b : batches) {
+					
+		%>
+		<tr>
+			<td><%= b.getBid() %></td>
+			<td><%= b.getStarttime() %></td>
+			<td><%= b.getEndtime() %></td>
+			<td><%= b.getTrainerName() %></td>
+			<td><a href='EditBatch?bid=<%=b.getBid()%>'>Edit</a></td>
+			<td><a href='DeleteBatch?bid=<%=b.getBid()%>'>Delete</a></td>
 		</tr>
 		<%} %>
 	</table>

@@ -21,6 +21,14 @@ public class Participant {
 		this.bid = bid;
 	}
 	
+	public Participant(String name, String phone, String email, int bid) {
+		super();
+		this.name = name;
+		this.phone = phone;
+		this.email = email;
+		this.bid = bid;
+	}
+	
 	public int getPid() {
 		return pid;
 	}

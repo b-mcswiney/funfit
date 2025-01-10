@@ -21,6 +21,13 @@ public class Batch {
 		this.trainerName = trainerName;
 	}
 	
+	public Batch(Date starttime, Date endtime, String trainerName) {
+		super();
+		this.starttime = starttime;
+		this.endtime = endtime;
+		this.trainerName = trainerName;
+	}
+
 	public int getBid() {
 		return bid;
 	}
